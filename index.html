@@ -764,8 +764,10 @@
                 completedTests.push('bigfive');
             }
             
-            // Envoyer les résultats
-            // Envoyer les résultats à Make.com
+            // Calculer les scores
+const scores = calculateBigFiveScores();
+
+// Envoyer les résultats à Make.com
 fetch('https://hook.eu2.make.com/6ol2it6houp2fce01qtsd1llz6obga33', {
     method: 'POST',
     headers: {
@@ -775,6 +777,7 @@ fetch('https://hook.eu2.make.com/6ol2it6houp2fce01qtsd1llz6obga33', {
         testType: 'BigFive',
         userInfo: userInfo,
         duration: duration,
+        scores: scores,
         answers: userAnswers,
         timestamp: new Date().toISOString()
     })
@@ -1008,18 +1011,18 @@ console.log('Test Big Five terminé:', {
                 completedTests.push('riasec');
             }
             
-            // Envoyer les résultats
-            // Envoyer les résultats à Make.com
+           // Calculer et envoyer les résultats à Make.com
+const scores = calculateBigFiveScores();
 fetch('https://hook.eu2.make.com/6ol2it6houp2fce01qtsd1llz6obga33', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-        testType: 'RIASEC',
+        testType: 'BigFive',
         userInfo: userInfo,
         duration: duration,
-        answers: userAnswers,
+        scores: scores,
         timestamp: new Date().toISOString()
     })
 });
@@ -1536,7 +1539,32 @@ console.log('Test RIASEC terminé:', {
                     { text: "Étudier le comportement humain", type: "I" }
                 ]
             }
-        ];
+       ];
+
+        // CALCUL DES SCORES
+        function calculateBigFiveScores() {
+            const scores = { sociabilite: 0, conscience: 0, equilibre: 0, meticulosite: 0, ouverture: 0 };
+            
+            for (let i = 0; i < userAnswers.length; i++) {
+                const ratings = userAnswers[i];
+                const question = bigFiveQuestions[i];
+                if (ratings) {
+                    for (let j = 0; j < 4; j++) {
+                        const factor = question.answers[j].factor;
+                        const points = 5 - ratings[j];
+                        scores[factor] += points;
+                    }
+                }
+            }
+            
+            return {
+                sociabilite: Math.round(scores.sociabilite / 12 * 10 * 10) / 10,
+                conscience: Math.round(scores.conscience / 12 * 10 * 10) / 10,
+                equilibre: Math.round(scores.equilibre / 12 * 10 * 10) / 10,
+                meticulosite: Math.round(scores.meticulosite / 12 * 10 * 10) / 10,
+                ouverture: Math.round(scores.ouverture / 12 * 10 * 10) / 10
+            };
+        }
     </script>
 </body>
 </html>
