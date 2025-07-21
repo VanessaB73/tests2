@@ -765,7 +765,22 @@
             }
             
             // Envoyer les résultats
-            console.log('Test Big Five terminé:', {
+            // Envoyer les résultats à Make.com
+fetch('https://hook.eu2.make.com/6ol2it6houp2fce01qtsd1llz6obga33', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        testType: 'BigFive',
+        userInfo: userInfo,
+        duration: duration,
+        answers: userAnswers,
+        timestamp: new Date().toISOString()
+    })
+});
+
+console.log('Test Big Five terminé:', {
                 userInfo,
                 duration,
                 answers: userAnswers
@@ -994,7 +1009,22 @@
             }
             
             // Envoyer les résultats
-            console.log('Test RIASEC terminé:', {
+            // Envoyer les résultats à Make.com
+fetch('https://hook.eu2.make.com/6ol2it6houp2fce01qtsd1llz6obga33', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        testType: 'RIASEC',
+        userInfo: userInfo,
+        duration: duration,
+        answers: userAnswers,
+        timestamp: new Date().toISOString()
+    })
+});
+
+console.log('Test RIASEC terminé:', {
                 userInfo,
                 duration,
                 answers: userAnswers
